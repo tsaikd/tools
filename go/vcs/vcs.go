@@ -733,6 +733,13 @@ func bitbucketVCS(match map[string]string) error {
 		return err
 	}
 
+	// check .git exist first
+	if _, err := os.Stat(".git"); err == nil {
+		match["vcs"] = "git"
+		match["repo"] += ".git"
+		return nil
+	}
+
 	var resp struct {
 		SCM string `json:"scm"`
 	}
