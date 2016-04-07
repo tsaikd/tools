@@ -40,6 +40,8 @@ type Cmd struct {
 
 	LogCmd string // command to list repository changelogs in an XML format
 
+	IdentifyCmd string // command to show repository revision identify string
+
 	Scheme  []string
 	PingCmd string
 }
@@ -92,6 +94,8 @@ var vcsHg = &Cmd{
 
 	LogCmd: "log --encoding=utf-8 --limit={limit} --template={template}",
 
+	IdentifyCmd: "parents --template '{node}'",
+
 	Scheme:  []string{"https", "http", "ssh"},
 	PingCmd: "identify {scheme}://{repo}",
 }
@@ -115,6 +119,8 @@ var vcsGit = &Cmd{
 	TagSyncCmd:     "checkout {tag}",
 	TagSyncDefault: "checkout master",
 
+	IdentifyCmd: "rev-parse HEAD",
+
 	Scheme:  []string{"git", "https", "http", "git+ssh"},
 	PingCmd: "ls-remote {scheme}://{repo}",
 }
@@ -133,6 +139,8 @@ var vcsBzr = &Cmd{
 	TagCmd:         []TagCmd{{"tags", `^(\S+)`}},
 	TagSyncCmd:     "update -r {tag}",
 	TagSyncDefault: "update -r revno:-1",
+
+	IdentifyCmd: "version-info --custom --template {revision_id}",
 
 	Scheme:  []string{"https", "http", "bzr", "bzr+ssh"},
 	PingCmd: "info {scheme}://{repo}",
@@ -317,6 +325,12 @@ func (v *Cmd) LogAtRev(dir, rev, logTemplate string) ([]byte, error) {
 	// Append revision flag to LogCmd.
 	logAtRevCmd := v.LogCmd + " --rev=" + rev
 	return v.runOutput(dir, logAtRevCmd, "limit", strconv.Itoa(1), "template", logTemplate)
+}
+
+// Identify return repository revision identify string
+func (v *Cmd) Identify(dir string) (string, error) {
+	out, err := v.runOutput(dir, v.IdentifyCmd)
+	return string(bytes.TrimSpace(out)), err
 }
 
 // A vcsPath describes how to convert an import path into a
