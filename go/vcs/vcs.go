@@ -16,6 +16,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/tsaikd/KDGoLib/futil"
 )
 
 // Verbose enables verbose operation logging.
@@ -673,6 +675,12 @@ func noVCSSuffix(match map[string]string) error {
 func bitbucketVCS(match map[string]string) error {
 	if err := noVCSSuffix(match); err != nil {
 		return err
+	}
+
+	if futil.IsExist(".git") {
+		match["vcs"] = "git"
+		match["repo"] += ".git"
+		return nil
 	}
 
 	var resp struct {
