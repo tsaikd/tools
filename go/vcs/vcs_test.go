@@ -42,6 +42,28 @@ func TestRepoRootForImportPath(t *testing.T) {
 				Repo: "https://github.com/user/unicode",
 			},
 		},
+		// testing for google go source code repo
+		{
+			"cloud.google.com/go",
+			&RepoRoot{
+				VCS:  vcsGit,
+				Repo: "https://code.googlesource.com/gocloud",
+			},
+		},
+		{
+			"cloud.google.com/go/trace",
+			&RepoRoot{
+				VCS:  vcsGit,
+				Repo: "https://code.googlesource.com/gocloud",
+			},
+		},
+		{
+			"cloud.google.com/go/internal/trace",
+			&RepoRoot{
+				VCS:  vcsGit,
+				Repo: "https://code.googlesource.com/gocloud",
+			},
+		},
 	}
 
 	for _, test := range tests {
