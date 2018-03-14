@@ -662,6 +662,24 @@ func expand(match map[string]string, s string) string {
 
 // vcsPaths lists the known vcs paths.
 var vcsPaths = []*vcsPath{
+	// go.googlesource.com
+	{
+		prefix: "go.googlesource.com",
+		re:     `^(?P<root>go\.googlesource\.com/[A-Za-z0-9_.\-]+/?)$`,
+		vcs:    "git",
+		repo:   "https://{root}",
+		check:  noVCSSuffix,
+	},
+
+	// cloud.google.com/go
+	{
+		prefix: "cloud.google.com/go",
+		re:     `^(?P<root>cloud\.google\.com/go)`,
+		vcs:    "git",
+		repo:   "https://code.googlesource.com/gocloud",
+		check:  noVCSSuffix,
+	},
+
 	// Github
 	{
 		prefix: "github.com/",
