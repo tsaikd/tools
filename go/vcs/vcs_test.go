@@ -64,6 +64,21 @@ func TestRepoRootForImportPath(t *testing.T) {
 				Repo: "https://code.googlesource.com/gocloud",
 			},
 		},
+		// testing for gopkg.in go source code repo
+		{
+			"gopkg.in/yaml.v2",
+			&RepoRoot{
+				VCS:  vcsGit,
+				Repo: "https://gopkg.in/yaml.v2",
+			},
+		},
+		{
+			"gopkg.in/cheggaaa/pb.v1",
+			&RepoRoot{
+				VCS:  vcsGit,
+				Repo: "https://gopkg.in/cheggaaa/pb.v1",
+			},
+		},
 	}
 
 	for _, test := range tests {

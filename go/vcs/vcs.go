@@ -680,6 +680,15 @@ var vcsPaths = []*vcsPath{
 		check:  noVCSSuffix,
 	},
 
+	// gopkg.in
+	{
+		prefix: "gopkg.in/",
+		re:     `^(?P<root>gopkg\.in/[A-Za-z0-9_.\-]+(/[A-Za-z0-9_.\-]+)?)(/[\p{L}0-9_.\-]+)*$`,
+		vcs:    "git",
+		repo:   "https://{root}",
+		check:  noVCSSuffix,
+	},
+
 	// Github
 	{
 		prefix: "github.com/",
