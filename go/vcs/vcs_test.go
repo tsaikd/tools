@@ -278,3 +278,13 @@ func TestMatchGoImport(t *testing.T) {
 		}
 	}
 }
+
+func TestIdentify(t *testing.T) {
+	identify, err := vcsGit.Identify(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if identify == "" {
+		t.Errorf("identify should not be empty")
+	}
+}
